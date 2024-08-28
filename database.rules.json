@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "profiles":{
+      "$user_id":{
+        ".read":"$user_id===auth.uid",
+        ".write":"$user_id===auth.uid"
+      }
+    },
+    "rooms":{
+      "$rooms_id":{
+          ".read":"auth !== null",
+      		".write":"auth !== null"
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}

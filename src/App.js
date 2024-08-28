@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home/Home";
+import Signin from "./Pages/SignIn/Signin";
+import Chat from "./Pages/Chat/Chat";
+import Error from "./Pages/Error/Error";
+import "rsuite/dist/rsuite.min.css";
+import { ProfileProvider } from "./context/profile.context";
+import { RoomsProvider } from "./context/rooms.context";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <ProfileProvider>
+          <RoomsProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </RoomsProvider>
+        </ProfileProvider>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
