@@ -1,4 +1,4 @@
-import { onValue, ref } from "firebase/database";
+import { off, onValue, ref } from "firebase/database";
 import { createContext, useContext, useEffect, useState } from "react";
 import { database } from "../misc/firebase";
 
@@ -13,6 +13,9 @@ export const RoomsProvider = ({ children }) => {
       console.log("Rooms ref:", snap.val());
       setAllRooms(snap.val());
     });
+    return () => {
+      off(roomsRef);
+    };
   });
 
   return (

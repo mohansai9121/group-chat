@@ -7,6 +7,7 @@ import Error from "./Pages/Error/Error";
 import "rsuite/dist/rsuite.min.css";
 import { ProfileProvider } from "./context/profile.context";
 import { RoomsProvider } from "./context/rooms.context";
+import Chatting from "./Pages/Chatting/Chatting";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
               <Route path="/signin" element={<Signin />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="*" element={<Error />} />
+              <Route path="/chatting/:chatID" element={<Chatting />} />
             </Routes>
           </RoomsProvider>
         </ProfileProvider>

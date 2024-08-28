@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { auth, database } from "../../misc/firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "rsuite";
-import { ref, set } from "firebase/database";
+import { push, ref, set } from "firebase/database";
 import { useRooms } from "../../context/rooms.context";
 
 const Chat = () => {
@@ -11,7 +11,7 @@ const Chat = () => {
   const [title, setTitle] = useState("");
   const [description, setdescription] = useState("");
   const [open, setOpen] = useState(false);
-  const [roomsCount, setRoomsCount] = useState(0);
+  //const [roomsCount, setRoomsCount] = useState(0);
   const [rooms, setRooms] = useState([]);
 
   const allRooms = useRooms();
@@ -22,20 +22,22 @@ const Chat = () => {
   };
 
   const creatingRoom = () => {
-    const roomsRef = ref(database, `rooms/${roomsCount}`);
-    let allRooms = [...rooms];
+    //const roomsRef = ref(database, `rooms/${roomsCount}`);
+    //let allRooms = [...rooms];
+    const roomRef = push(ref(database, "rooms"));
     let room = {
       title: title,
       description: description,
+      id: roomRef,
     };
-    set(roomsRef, room);
-    setRoomsCount((r) => r + 1);
+    set(roomRef, room);
+    //setRoomsCount((r) => r + 1);
     setOpen(false);
     alert("Created new room");
     setTitle("");
     setdescription("");
-    allRooms.push(room);
-    setRooms(allRooms);
+    /*allRooms.push(room);
+    setRooms(allRooms);*/
   };
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const Chat = () => {
           rooms.map((room, idx) => {
             return (
               <div key={idx}>
-                <div>{room.title}</div>
+                <Link to={`chatting/${room.id}`}>{room.title}</Link>
               </div>
             );
           })}
