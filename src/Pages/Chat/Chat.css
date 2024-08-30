@@ -1,0 +1,102 @@
+.chat {
+  text-align: center;
+}
+.typing {
+  width: 700px;
+  margin-left: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #000000;
+  animation: type 5s steps(35, end) infinite,
+    cursor 0.3s steps(35, end) infinite;
+}
+.typing1 {
+  width: 700px;
+  margin-left: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #000000;
+  animation: type 6s steps(35, end), cursor 0.5s steps(35, end);
+}
+.typing1:hover,
+.typing1:focus {
+  animation-iteration-count: infinite;
+}
+@keyframes type {
+  from {
+    width: 0;
+  }
+}
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}
+.display {
+  display: flex;
+}
+.left-box {
+  width: 300px;
+  height: 550px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+.right-box {
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 1000px;
+  margin: 1px;
+}
+.profile-image {
+  margin: 5px;
+  border-radius: 100%;
+  height: 120px;
+  width: 120px;
+}
+.chat-links {
+  font-size: 22px;
+  font-weight: 400;
+  padding: 4px 5px;
+  border: 1px solid black;
+  width: 290px;
+  height: 30px;
+}
+.links {
+  height: 320px;
+  width: 280px;
+  overflow: scroll;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.hr-line {
+  border: 1px solid black;
+}
+.create-room {
+  margin: 5px;
+}
+.sign-out-btn {
+  margin: 5px;
+}
+
+@media (max-width: 768px) {
+  .right-box {
+    display: none;
+  }
+  .typing1 {
+    width: 420px;
+    font-size: 20px;
+    margin-left: 5px;
+  }
+  .left-box {
+    width: 400px;
+    height: 700px;
+    margin-left: 12px;
+  }
+  .links {
+    height: 550px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 50px;
+  }
+}

@@ -2,6 +2,9 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React from "react";
 import { auth, database } from "../../misc/firebase";
 import { ref, set } from "firebase/database";
+import "./Signin.css";
+import { IconButton } from "rsuite";
+import { FaGoogle } from "react-icons/fa";
 
 const Signin = () => {
   const googleSignIn = async () => {
@@ -26,8 +29,16 @@ const Signin = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={googleSignIn}>SignIn with Google</button>
+      <div className="signin">
+        <IconButton
+          appearance="primary"
+          color="green"
+          icon={<FaGoogle />}
+          onClick={googleSignIn}
+        >
+          {" "}
+          Sign In With Google
+        </IconButton>
       </div>
     </div>
   );
