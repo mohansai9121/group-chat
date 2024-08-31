@@ -20,7 +20,7 @@ const Signin = () => {
           recentLogin: response.user.metadata.lastSignInTime,
           image: response.user.photoURL,
         });
-        alert("Logged in, Added to Database");
+        alert("Logged in..!");
       }
     } catch (err) {
       console.log("Error in Signing in:", err.message);

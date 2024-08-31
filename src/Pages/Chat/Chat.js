@@ -51,11 +51,11 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    if (signedOut) {
+    /*if (signedOut) {
       navigate("/");
-    }
+    }*/
     setRooms(Object.values(allRooms));
-  }, [signedOut, navigate, allRooms]);
+  }, [allRooms]);
 
   return (
     <div className="chat">
@@ -76,6 +76,11 @@ const Chat = () => {
               />
             )}
             <h4>{profile.name}</h4>
+            <p className="posts">
+              <Link style={{ textDecoration: "none" }} to="/posts">
+                Posts
+              </Link>
+            </p>
           </div>
           <div className="links">
             <p style={{ backgroundColor: "gray" }}>Available Groups</p>

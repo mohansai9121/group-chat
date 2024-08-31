@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBwdEVhS05VT9RQ6RhVdhQcp3XE1HGdGfE",
@@ -17,3 +18,4 @@ export const database = getDatabase(
   app,
   "https://group-chat-ce5c0-default-rtdb.asia-southeast1.firebasedatabase.app/"
 );
+export const storage = getStorage(app, "gs://group-chat-ce5c0.appspot.com");

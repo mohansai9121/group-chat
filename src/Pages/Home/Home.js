@@ -1,29 +1,36 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Signin from "../SignIn/Signin";
 import { useProfile } from "../../context/profile.context";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import Chat from "../Chat/Chat";
 
 const Home = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const { profile } = useProfile();
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (profile) {
       navigate("/chat");
     } else {
       navigate("/");
     }
-  }, [profile, navigate]);
+  }, [profile, navigate]);*/
 
   return (
-    <div className="home">
-      <div className="floating">
-        <h1>Group Chat Application</h1>
-        <h4>A Progressive Web Application for chatting...</h4>
-      </div>
-      <Signin />
-    </div>
+    <>
+      {profile ? (
+        <Chat />
+      ) : (
+        <div className="home">
+          <div className="floating">
+            <h1>Group Chat Application</h1>
+            <h4>A Progressive Web Application for chatting...</h4>
+          </div>
+          <Signin />
+        </div>
+      )}
+    </>
   );
 };
 
