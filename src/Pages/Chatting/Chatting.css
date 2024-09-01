@@ -20,13 +20,14 @@
   }
 }
 .chat-area {
-  margin-left: 10%;
+  margin: 25px 30px 25px 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 80%;
   overflow: scroll;
-  height: 450px;
+  height: 400px;
+  padding: 10px;
   border-radius: 10px;
   border: 2px solid black;
 }
@@ -40,6 +41,10 @@
 .messages-display {
   display: flex;
   gap: 5px;
+  border: 0.7px solid black;
+  margin: 1px 5px 1px 5px;
+  border-radius: 3px;
+  padding: 5px;
 }
 .input-msg {
   margin: 5px;
@@ -58,4 +63,9 @@
   background-color: coral;
   color: white;
   border-radius: 6px;
+}
+@media (max-width: 600px) {
+  .chat-area {
+    height: 750px;
+  }
 }

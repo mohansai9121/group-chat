@@ -57,7 +57,7 @@ const Chatting = () => {
   return (
     <div>
       <div className="heading">
-        <Link to="/chat">
+        <Link to="/">
           <button className="go-back-btn">Go Back to Rooms</button>
         </Link>
         <div>
@@ -85,8 +85,14 @@ const Chatting = () => {
           {messages &&
             messages.map((message) => (
               <div key={message.timestamp} className="messages-display">
-                <span style={{ textDecoration: "underline" }}>
-                  {message.user}
+                <span
+                  style={{
+                    textDecoration: "underline",
+                    width: "100px",
+                    overflow: "hidden",
+                  }}
+                >
+                  {message.user.split(" ")[0]}
                 </span>
                 :<p className="text">{message.text}</p>
               </div>

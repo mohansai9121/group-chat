@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-//import profileimg from "../../assets/profile.png";
+import nopost from "../../assets/nopost.png";
 import "./Posts.css";
 import { FaPlusSquare } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -8,7 +8,6 @@ import { ref as dbRef, push, set } from "firebase/database";
 import { Modal } from "rsuite";
 import { Link } from "react-router-dom";
 import { database } from "../../misc/firebase";
-//import { postUpload } from "../../misc/postUpload";
 import { useProfile } from "../../context/profile.context";
 import ViewPosts from "../ViewPosts/ViewPosts";
 
@@ -18,6 +17,8 @@ const Posts = () => {
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [currentImgUrl, setCurrentImgUrl] = useState("");
+  const [currentDescription, setCurrentDescription] = useState("");
 
   const { profile } = useProfile();
   console.log("in posts:", profile);
@@ -44,6 +45,7 @@ const Posts = () => {
           getDownloadURL(uploadImg.snapshot.ref)
             .then((url) => {
               setImageUrl(url);
+              setCurrentImgUrl(url);
               console.log("Uploaded Image url:", url);
               setIsUploading(false);
               setOpen(true);
@@ -59,8 +61,8 @@ const Posts = () => {
 
   const closing = useCallback(() => {
     setOpen(false);
-    setDescription("");
     setImageUrl("");
+    setDescription("");
   }, []);
 
   const handlePost = useCallback(() => {
@@ -73,6 +75,7 @@ const Posts = () => {
         timestamp: Date.now(),
       });
       closing();
+      alert("Post uploaded successfully");
     } else {
       console.error("Image URL or profile name is not available");
     }
@@ -92,8 +95,8 @@ const Posts = () => {
             Back to Chat rooms
           </Link>
         </div>
-        <div className="heading">
-          <h3>View and create posts...</h3>
+        <div>
+          <h3 className="heading">View and create posts...</h3>
         </div>
       </div>
       <div>
@@ -116,6 +119,7 @@ const Posts = () => {
             type="text"
             value={description}
             onChange={(e) => {
+              setCurrentDescription(e.target.value);
               setDescription(e.target.value);
             }}
           />
@@ -140,7 +144,20 @@ const Posts = () => {
         </Modal.Footer>
       </Modal>
       <div className="view-posts">
+        <br />
         <ViewPosts />
+        <div className="post-preview">
+          <h4 style={{ textAlign: "center", color: "green" }}>
+            This is the post preview
+          </h4>
+          <img
+            src={currentImgUrl ? currentImgUrl : nopost}
+            alt="uploading"
+            style={{ maxWidth: "100%" }}
+          />
+          <p>{currentDescription ? currentDescription : "No description"}</p>
+          <p>Posted by:{profile.name}</p>
+        </div>
       </div>
     </div>
   );

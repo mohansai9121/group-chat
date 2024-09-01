@@ -8,6 +8,7 @@ import { ProfileProvider } from "./context/profile.context";
 import { RoomsProvider } from "./context/rooms.context";
 import Chatting from "./Pages/Chatting/Chatting";
 import Posts from "./Pages/Posts/Posts";
+import { PostsProvider } from "./context/posts.context";
 
 const App = () => {
   return (
@@ -15,13 +16,15 @@ const App = () => {
       <BrowserRouter>
         <ProfileProvider>
           <RoomsProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/posts" element={<Posts />} />
-              <Route path="*" element={<Error />} />
-              <Route path="/chatting/:chatID" element={<Chatting />} />
-            </Routes>
+            <PostsProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/posts" element={<Posts />} />
+                <Route path="*" element={<Error />} />
+                <Route path="/chatting/:chatID" element={<Chatting />} />
+              </Routes>
+            </PostsProvider>
           </RoomsProvider>
         </ProfileProvider>
       </BrowserRouter>
