@@ -1,11 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
-import nopost from "../../assets/nopost.png";
 import "./Posts.css";
 import { FaPlusSquare } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../misc/firebase";
 import { ref as dbRef, push, set } from "firebase/database";
-import { Modal } from "rsuite";
+import { Button, Modal } from "rsuite";
 import { Link } from "react-router-dom";
 import { database } from "../../misc/firebase";
 import { useProfile } from "../../context/profile.context";
@@ -17,8 +16,6 @@ const Posts = () => {
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [currentImgUrl, setCurrentImgUrl] = useState("");
-  const [currentDescription, setCurrentDescription] = useState("");
 
   const { profile } = useProfile();
   console.log("in posts:", profile);
@@ -45,7 +42,6 @@ const Posts = () => {
           getDownloadURL(uploadImg.snapshot.ref)
             .then((url) => {
               setImageUrl(url);
-              setCurrentImgUrl(url);
               console.log("Uploaded Image url:", url);
               setIsUploading(false);
               setOpen(true);
@@ -72,7 +68,7 @@ const Posts = () => {
         imgurl: imageUrl,
         info: description,
         user: profile.name,
-        timestamp: Date.now(),
+        timestamp: new Date().toLocaleString(),
       });
       closing();
       alert("Post uploaded successfully");
@@ -118,10 +114,11 @@ const Posts = () => {
           <input
             type="text"
             value={description}
+            placeholder="Description of the post..."
             onChange={(e) => {
-              setCurrentDescription(e.target.value);
               setDescription(e.target.value);
             }}
+            className="modal-input"
           />
         </Modal.Header>
         <Modal.Body>
@@ -132,32 +129,28 @@ const Posts = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <button
+          <Button
             appearance="primary"
             color="blue"
+            style={{ margin: "5px" }}
             onClick={handlePost}
             disabled={isUploading || !imageUrl}
           >
             Post
-          </button>
-          <button onClick={closing}>Cancel</button>
+          </Button>
+          <Button
+            onClick={closing}
+            appearance="primary"
+            color="red"
+            style={{ margin: "5px" }}
+          >
+            Cancel
+          </Button>
         </Modal.Footer>
       </Modal>
       <div className="view-posts">
         <br />
         <ViewPosts />
-        <div className="post-preview">
-          <h4 style={{ textAlign: "center", color: "green" }}>
-            This is the post preview
-          </h4>
-          <img
-            src={currentImgUrl ? currentImgUrl : nopost}
-            alt="uploading"
-            style={{ maxWidth: "100%" }}
-          />
-          <p>{currentDescription ? currentDescription : "No description"}</p>
-          <p>Posted by:{profile.name}</p>
-        </div>
       </div>
     </div>
   );

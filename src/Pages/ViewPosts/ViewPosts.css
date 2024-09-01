@@ -1,0 +1,30 @@
+.postImage {
+  width: 600px;
+  height: 500px;
+}
+.posts-display {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 20px 100px 20px 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px gray;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}
+.displaying-posts {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+@media (max-width: 600px) {
+  .postImage {
+    width: 300px;
+    height: 400px;
+  }
+  .posts-display {
+    margin: 10px 5px 10px 5px;
+  }
+}

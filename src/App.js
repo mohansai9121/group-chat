@@ -9,6 +9,7 @@ import { RoomsProvider } from "./context/rooms.context";
 import Chatting from "./Pages/Chatting/Chatting";
 import Posts from "./Pages/Posts/Posts";
 import { PostsProvider } from "./context/posts.context";
+import ViewPosts from "./Pages/ViewPosts/ViewPosts";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <RoomsProvider>
             <PostsProvider>
               <Routes>
+                <Route path="/posts/viewposts" element={<ViewPosts />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/posts" element={<Posts />} />

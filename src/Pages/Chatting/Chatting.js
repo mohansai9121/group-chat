@@ -15,24 +15,30 @@ const Chatting = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
 
   const sendMessage = () => {
     console.log(message);
-    const messagesRef = push(ref(database, `rooms/${chatID}/messages`));
-    set(messagesRef, {
-      text: message,
-      timestamp: Date.now(),
-      user: profile.name,
-    })
-      .then(() => {
-        setMessage("");
-        console.log("Message sent");
-        alert("Message sent");
+    if (!message) {
+      alert("please enter some message...");
+    }
+    if (message) {
+      const messagesRef = push(ref(database, `rooms/${chatID}/messages`));
+      set(messagesRef, {
+        text: message,
+        timestamp: Date.now(),
+        user: profile.name,
       })
-      .catch((err) => {
-        console.log(err);
-        alert("Error sending message");
-      });
+        .then(() => {
+          setMessage("");
+          console.log("Message sent");
+          alert("Message sent successfully...");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Error sending message..!");
+        });
+    }
   };
 
   useEffect(() => {
@@ -50,6 +56,7 @@ const Chatting = () => {
       if (snap.val()) {
         console.log("room name:", snap.val().title);
         setRoomName(snap.val().title);
+        setRoomDescription(snap.val().description);
       }
     });
   }, [chatID]);
@@ -63,6 +70,9 @@ const Chatting = () => {
         <div>
           <p style={{ textDecoration: "underline" }}>Room Name:</p>
           <h1 className="zoom-left">{roomName}</h1>
+          <span>
+            {roomDescription ? roomDescription : "No information provided"}
+          </span>
         </div>
       </div>
       <div className="chat-area">
@@ -70,6 +80,7 @@ const Chatting = () => {
           <input
             type="text"
             value={message}
+            placeholder="Enter message here..."
             onChange={(e) => setMessage(e.target.value)}
           />
           <IconButton

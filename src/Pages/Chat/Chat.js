@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, database } from "../../misc/firebase";
 import { Link, useNavigate } from "react-router-dom";
-import { Modal, IconButton } from "rsuite";
+import { Modal, IconButton, Button } from "rsuite";
 import { push, ref, set } from "firebase/database";
 import { useRooms } from "../../context/rooms.context";
 import "./Chat.css";
@@ -30,24 +30,32 @@ const Chat = () => {
   };
 
   const creatingRoom = () => {
-    const roomRef = push(ref(database, "rooms"));
-    let room = {
-      title: title,
-      description: description,
-      id: roomRef.key,
-    };
-    set(roomRef, room)
-      .then(() => {
-        setOpen(false);
-        alert("Created new room");
-        setOpen(false);
-        setTitle("");
-        setdescription("");
-      })
-      .catch((err) => {
-        alert("Failed to create new room");
-        console.log("Error creating room:", err);
-      });
+    if (!title) {
+      alert("Please provide title of the room...");
+    }
+    if (title && !description) {
+      alert("please provide description of the room...");
+    }
+    if (title && description) {
+      const roomRef = push(ref(database, "rooms"));
+      let room = {
+        title: title,
+        description: description,
+        id: roomRef.key,
+      };
+      set(roomRef, room)
+        .then(() => {
+          setOpen(false);
+          alert("Created new room");
+          setOpen(false);
+          setTitle("");
+          setdescription("");
+        })
+        .catch((err) => {
+          alert("Failed to create new room");
+          console.log("Error creating room:", err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -111,18 +119,28 @@ const Chat = () => {
                 Title
                 <input
                   value={title}
+                  placeholder="Title of the room..."
                   onChange={(e) => setTitle(e.target.value)}
+                  style={{ width: "250px", height: "25px" }}
                 />
               </Modal.Header>
               <Modal.Body>
                 Description:
                 <input
+                  placeholder="information about the room..."
                   value={description}
+                  style={{ width: "250px", height: "25px" }}
                   onChange={(e) => setdescription(e.target.value)}
                 />
               </Modal.Body>
               <Modal.Footer>
-                <button onClick={creatingRoom}>Ok</button>
+                <Button
+                  onClick={creatingRoom}
+                  appearance="primary"
+                  color="green"
+                >
+                  Ok
+                </Button>
               </Modal.Footer>
             </Modal>
           </div>

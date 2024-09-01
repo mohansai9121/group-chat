@@ -19,6 +19,8 @@
       }
     },
     "posts":{
+      ".read":"auth !== null",
+      ".write":"auth !== null",
       "$posts_id":{
         ".read":"auth !== null",
         ".write":"auth !== null"
