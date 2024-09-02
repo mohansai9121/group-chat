@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import "./Posts.css";
 import { FaPlusSquare } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -76,10 +76,6 @@ const Posts = () => {
       console.error("Image URL or profile name is not available");
     }
   }, [imageUrl, profile.name, description, closing]);
-
-  useEffect(() => {
-    console.log("Current imageUrl:", imageUrl);
-  }, [imageUrl]);
 
   console.log("progress in url generation:", uploadProgress);
 

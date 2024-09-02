@@ -5,8 +5,6 @@
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
   margin: 1px 70px 1px 70px;
 }
 .create-post {

@@ -18,6 +18,28 @@
   display: flex;
   flex-direction: column-reverse;
 }
+.post-footer {
+  display: flex;
+  gap: 120px;
+}
+.all-comments {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+  border-top: 0.5px solid black;
+}
+.single-comment {
+  border-bottom: 0.5px solid black;
+}
+.input-comment {
+  width: 250px;
+  height: 25px;
+  font-size: 20px;
+}
+.modal-body {
+  overflow: scroll;
+  max-height: 300px;
+}
 
 @media (max-width: 600px) {
   .postImage {
@@ -26,5 +48,11 @@
   }
   .posts-display {
     margin: 10px 5px 10px 5px;
+  }
+  .post-footer {
+    gap: 50px;
+  }
+  .modal-body {
+    max-height: 500px;
   }
 }
