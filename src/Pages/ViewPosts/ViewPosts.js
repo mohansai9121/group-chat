@@ -2,7 +2,6 @@ import { ref, update, remove, push, set, onValue } from "firebase/database";
 import { FaHeart, FaRegComment } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import React, { useState } from "react";
-
 import { usePosts } from "../../context/posts.context";
 import "./ViewPosts.css";
 import { useProfile } from "../../context/profile.context";
