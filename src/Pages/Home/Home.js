@@ -4,10 +4,11 @@ import { useProfile } from "../../context/profile.context";
 //import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import Chat from "../Chat/Chat";
+import { Oval } from "react-loader-spinner";
 
 const Home = () => {
   //const navigate = useNavigate();
-  const { profile } = useProfile();
+  const { profile, loading } = useProfile();
 
   /*useEffect(() => {
     if (profile) {
@@ -21,6 +22,16 @@ const Home = () => {
     <>
       {profile ? (
         <Chat />
+      ) : !profile && loading ? (
+        <Oval
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="oval-loading"
+          color="#0da006"
+          wrapperStyle={{}}
+          wrapperClass="signin-loading"
+        />
       ) : (
         <div className="home">
           <div className="floating">

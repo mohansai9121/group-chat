@@ -6,6 +6,7 @@ const PostsContext = createContext();
 
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState({});
+  const [loading, setLoading] = useState(true);
 
   console.log("posts in posts context", posts);
 
@@ -22,10 +23,12 @@ export const PostsProvider = ({ children }) => {
             ...prePosts,
             [snapshot.key]: snapshot.val(),
           }));
+          setLoading(false);
         }
       },
       (err) => {
         console.log("error in retrieving posts:", err.message);
+        setLoading(true);
       }
     );
 
@@ -36,6 +39,7 @@ export const PostsProvider = ({ children }) => {
           ...prePosts,
           [snapShot.key]: snapShot.val(),
         }));
+        setLoading(false);
       }
     });
     return () => {
@@ -46,7 +50,9 @@ export const PostsProvider = ({ children }) => {
   }, []);
 
   return (
-    <PostsContext.Provider value={posts}>{children}</PostsContext.Provider>
+    <PostsContext.Provider value={{ posts, loading }}>
+      {children}
+    </PostsContext.Provider>
   );
 };
 

@@ -12,6 +12,12 @@
   width: auto;
   height: auto;
 }
+.signin-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 200px;
+}
 .home h1 {
   color: darkred;
   text-shadow: 0px 0px 5px white;

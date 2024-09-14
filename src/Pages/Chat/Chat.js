@@ -9,6 +9,10 @@ import { MdLogout } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import profileImg from "../../assets/profile.png";
 import { useProfile } from "../../context/profile.context";
+import { FidgetSpinner } from "react-loader-spinner";
+import ChatIcon from "./ChatIcon";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stage } from "@react-three/drei";
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -19,7 +23,7 @@ const Chat = () => {
   const [open, setOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
 
-  const allRooms = useRooms();
+  const { allRooms, loading } = useRooms();
   console.log("allRooms:", allRooms);
 
   const signingOut = () => {
@@ -94,15 +98,30 @@ const Chat = () => {
             </p>
           </div>
           <div className="links">
-            <p style={{ backgroundColor: "gray" }}>Available Groups</p>
-            {rooms &&
+            <p style={{ backgroundColor: "gray" }}>Available Rooms</p>
+            {rooms && !loading ? (
               rooms.map((room, idx) => {
                 return (
                   <div key={idx} className="chat-links">
                     <Link to={`/chatting/${room.id}`}>{room.title}</Link>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <>
+                <FidgetSpinner
+                  visible={true}
+                  height="80"
+                  width="80"
+                  ariaLabel="fidget-spinner-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+                <p style={{ color: "red" }}>Note: Rooms are loading...</p>
+                <p style={{ color: "red" }}>Try refreshing the page</p>
+                <p style={{ color: "red" }}>With good internet connection</p>
+              </>
+            )}
           </div>
           <div>
             <IconButton
@@ -158,9 +177,12 @@ const Chat = () => {
           </div>
         </div>
         <div className="right-box">
-          <h2 style={{ marginTop: "200px" }} className="typing">
-            Click on the chat groups to open chat..
-          </h2>
+          <Canvas>
+            <Stage environment="forest" intensity={1}>
+              <ChatIcon />
+            </Stage>
+            <OrbitControls enableZoom={false} autoRotate />
+          </Canvas>
         </div>
       </div>
     </div>

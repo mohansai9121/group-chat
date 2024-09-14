@@ -6,6 +6,7 @@ const RoomsContext = createContext();
 
 export const RoomsProvider = ({ children }) => {
   const [allRooms, setAllRooms] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log("useEffect");
@@ -21,9 +22,11 @@ export const RoomsProvider = ({ children }) => {
             ...prevRooms,
             [snapshot.key]: snapshot.val(),
           }));
+          setLoading(false);
         }
       },
       (err) => {
+        setLoading(true);
         console.log("Error in retreiving data:", err);
       }
     );
@@ -44,7 +47,9 @@ export const RoomsProvider = ({ children }) => {
   }, []);
 
   return (
-    <RoomsContext.Provider value={allRooms}>{children}</RoomsContext.Provider>
+    <RoomsContext.Provider value={{ allRooms, loading }}>
+      {children}
+    </RoomsContext.Provider>
   );
 };
 

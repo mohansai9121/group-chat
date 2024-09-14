@@ -97,7 +97,13 @@
 
 @media (max-width: 768px) {
   .right-box {
-    display: none;
+    border: none;
+    width: 200px;
+    height: 200px;
+    margin-left: 120px;
+  }
+  .display {
+    flex-direction: column-reverse;
   }
   .typing1 {
     width: 420px;

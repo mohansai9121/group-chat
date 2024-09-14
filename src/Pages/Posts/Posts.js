@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Posts.css";
 import { FaPlusSquare } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../misc/firebase";
-import { ref as dbRef, push, set } from "firebase/database";
+import { ref as dbRef, onValue, push, set } from "firebase/database";
 import { Button, Modal } from "rsuite";
 import { Link } from "react-router-dom";
 import { database } from "../../misc/firebase";
@@ -16,10 +16,29 @@ const Posts = () => {
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [posts, setPosts] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const postsRef = dbRef(database, "posts");
+    onValue(
+      postsRef,
+      (snap) => {
+        if (snap.val()) {
+          setPosts(snap.val());
+          setLoading(false);
+        }
+      },
+      (err) => {
+        console.log("Error in retrieving data", err.message);
+        setLoading(false);
+      }
+    );
+  }, []);
 
   const { profile } = useProfile();
   console.log("in posts:", profile);
-  console.log("name in posts:", profile.name);
+  console.log("name in posts:", profile?.name);
 
   const fileChange = (e) => {
     let image1 = e.target.files[0];
@@ -42,7 +61,6 @@ const Posts = () => {
           getDownloadURL(uploadImg.snapshot.ref)
             .then((url) => {
               setImageUrl(url);
-              console.log("Uploaded Image url:", url);
               setIsUploading(false);
               setOpen(true);
             })
@@ -76,8 +94,6 @@ const Posts = () => {
       console.error("Image URL or profile name is not available");
     }
   }, [imageUrl, profile.name, description, closing]);
-
-  console.log("progress in url generation:", uploadProgress);
 
   return (
     <div>
@@ -146,7 +162,7 @@ const Posts = () => {
       </Modal>
       <div className="view-posts">
         <br />
-        <ViewPosts />
+        <ViewPosts posts={posts} loading={loading} />
       </div>
     </div>
   );

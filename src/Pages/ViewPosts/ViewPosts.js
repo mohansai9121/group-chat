@@ -2,14 +2,15 @@ import { ref, update, remove, push, set, onValue } from "firebase/database";
 import { FaHeart, FaRegComment } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import React, { useState } from "react";
-import { usePosts } from "../../context/posts.context";
+//import { usePosts } from "../../context/posts.context";
 import "./ViewPosts.css";
 import { useProfile } from "../../context/profile.context";
 import { database } from "../../misc/firebase";
 import { Button, Modal } from "rsuite";
+import Chat from "../Chat/Chat";
+import { MagnifyingGlass } from "react-loader-spinner";
 
-const ViewPosts = () => {
-  const { posts } = usePosts();
+const ViewPosts = ({ posts, loading }) => {
   const { profile } = useProfile();
   const [likes, setLikes] = useState(false);
   const [open, setOpen] = useState(false);
@@ -83,7 +84,7 @@ const ViewPosts = () => {
   return (
     <div>
       <div className="displaying-posts">
-        {posts ? (
+        {posts && !loading ? (
           Object.entries(posts).map(([postID, post]) => (
             <div key={postID} className="posts-display">
               <div className="post-footer">
@@ -130,17 +131,22 @@ const ViewPosts = () => {
               </p>
             </div>
           ))
+        ) : !posts && loading ? (
+          <>
+            <MagnifyingGlass
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="magnifying-glass-loading"
+              glassColor="#c0efff"
+              color="#e15b64"
+              wrapperClass=""
+              wrapperStyle={{}}
+            />
+          </>
         ) : (
           <>
-            <h4
-              style={{
-                textAlign: "center",
-                color: "red",
-                backgroundColor: "yellow",
-              }}
-            >
-              No posts available, ERROR in retrieving posts..working on it
-            </h4>
+            <Chat />
           </>
         )}
       </div>
