@@ -135,12 +135,12 @@ const ViewPosts = ({ posts, loading }) => {
           <>
             <MagnifyingGlass
               visible={true}
-              height="80"
-              width="80"
+              height="100"
+              width="100"
               ariaLabel="magnifying-glass-loading"
               glassColor="#c0efff"
               color="#e15b64"
-              wrapperClass=""
+              wrapperClass="magnifying-glass"
               wrapperStyle={{}}
             />
           </>
