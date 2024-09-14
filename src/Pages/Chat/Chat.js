@@ -88,14 +88,12 @@ const Chat = () => {
               />
             )}
             <h4>{profile.name}</h4>
-            <p className="posts">
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/posts"
-              >
-                Posts
-              </Link>
-            </p>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/posts"
+            >
+              <p className="posts">Posts</p>
+            </Link>
           </div>
           <div className="links">
             <p style={{ backgroundColor: "gray" }}>Available Rooms</p>

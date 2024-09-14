@@ -105,6 +105,13 @@ const Posts = () => {
         </div>
         <div>
           <h3 className="heading">View and create posts...</h3>
+          <p>
+            Only{" "}
+            <span style={{ color: "red" }}>
+              jpeg, jpg, png, svg, gif, ico, apng, pjp
+            </span>{" "}
+            image formats are acceptable
+          </p>
         </div>
       </div>
       <div>

@@ -14,6 +14,7 @@ const ViewPosts = ({ posts, loading }) => {
   const { profile } = useProfile();
   const [likes, setLikes] = useState(false);
   const [open, setOpen] = useState(false);
+  const [likeAnimation, setLikeAnimation] = useState(false);
   const [comment, setComment] = useState("");
   const [allComments, setAllComments] = useState({});
   const [currentPostId, setCurrentPostId] = useState(null);
@@ -24,9 +25,7 @@ const ViewPosts = ({ posts, loading }) => {
     setLikes(true);
     let postRef = ref(database, `posts/${postId}`);
     if (likes) {
-      update(postRef, { likes: (posts[postId].likes || 0) + 1 }).then(() => {
-        alert("liked the post");
-      });
+      update(postRef, { likes: (posts[postId].likes || 0) + 1 }).then(() => {});
     }
   };
 
@@ -60,6 +59,14 @@ const ViewPosts = ({ posts, loading }) => {
     setCurrentPostId(null);
   };
 
+  const liking = (postId) => {
+    handleLike(postId);
+    setLikeAnimation(true);
+    setTimeout(() => {
+      setLikeAnimation(false);
+    }, 2000);
+  };
+
   const postComment = () => {
     if (comment && currentPostId) {
       const postCommentsRef = push(
@@ -89,7 +96,12 @@ const ViewPosts = ({ posts, loading }) => {
             <div key={postID} className="posts-display">
               <div className="post-footer">
                 <div>
-                  <FaHeart onClick={() => handleLike(postID)} size={25} />{" "}
+                  <FaHeart
+                    onClick={() => liking(postID)}
+                    size={25}
+                    value={postID}
+                    className={likeAnimation ? "likedHeart" : ""}
+                  />{" "}
                   <span style={{ fontSize: "20px" }}>
                     {post.likes || 0} likes
                   </span>

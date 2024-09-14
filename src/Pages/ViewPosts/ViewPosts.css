@@ -22,6 +22,15 @@
   margin-left: 450px;
   margin-top: 100px;
 }
+.likedHeart {
+  animation: like 1.9s 1;
+  color: red;
+}
+@keyframes like {
+  50% {
+    transform: translateY(-300px) translateX(70px) scale(2.2);
+  }
+}
 .post-footer {
   display: flex;
   gap: 120px;
