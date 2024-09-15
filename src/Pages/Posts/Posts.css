@@ -47,11 +47,18 @@
   height: 30px;
   font-size: 15px;
 }
+.progress-bar {
+  margin-top: 30px;
+  margin-left: 450px;
+}
 
 @media (max-width: 768px) {
   .view-posts {
     margin: 1px 10px 1px 10px;
     overflow: scroll;
+  }
+  .progress-bar {
+    margin-left: 70px;
   }
   .heading {
     font-size: 15px;

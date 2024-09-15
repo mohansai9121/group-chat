@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { database } from "../../misc/firebase";
 import { useProfile } from "../../context/profile.context";
 import ViewPosts from "../ViewPosts/ViewPosts";
+import { ProgressBar } from "react-loader-spinner";
 
 const Posts = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -127,46 +128,64 @@ const Posts = () => {
           />
         </label>
       </div>
-      <Modal open={open} onClose={closing}>
-        <Modal.Header>
-          Description:
-          <input
-            type="text"
-            value={description}
-            placeholder="Description of the post..."
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            className="modal-input"
+      {isUploading ? (
+        <>
+          <ProgressBar
+            visible={true}
+            height="80"
+            width="300"
+            ariaLabel="progress-bar-loading"
+            color="#13b90b"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar"
           />
-        </Modal.Header>
-        <Modal.Body>
-          {imageUrl ? (
-            <img src={imageUrl} alt="uploading" style={{ maxWidth: "100%" }} />
-          ) : (
-            <p>Image is uploading... {uploadProgress.toFixed(2)}%</p>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            appearance="primary"
-            color="blue"
-            style={{ margin: "5px" }}
-            onClick={handlePost}
-            disabled={isUploading || !imageUrl}
-          >
-            Post
-          </Button>
-          <Button
-            onClick={closing}
-            appearance="primary"
-            color="red"
-            style={{ margin: "5px" }}
-          >
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </>
+      ) : (
+        <Modal open={open} onClose={closing}>
+          <Modal.Header>
+            Description:
+            <input
+              type="text"
+              value={description}
+              placeholder="Description of the post..."
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              className="modal-input"
+            />
+          </Modal.Header>
+          <Modal.Body>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="uploading"
+                style={{ maxWidth: "100%" }}
+              />
+            ) : (
+              <p>Image is uploading... {uploadProgress.toFixed(2)}%</p>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              appearance="primary"
+              color="blue"
+              style={{ margin: "5px" }}
+              onClick={handlePost}
+              disabled={isUploading || !imageUrl}
+            >
+              Post
+            </Button>
+            <Button
+              onClick={closing}
+              appearance="primary"
+              color="red"
+              style={{ margin: "5px" }}
+            >
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
       <div className="view-posts">
         <br />
         <ViewPosts posts={posts} loading={loading} />

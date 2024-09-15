@@ -1,7 +1,7 @@
 import { ref, update, remove, push, set, onValue } from "firebase/database";
 import { FaHeart, FaRegComment } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 //import { usePosts } from "../../context/posts.context";
 import "./ViewPosts.css";
 import { useProfile } from "../../context/profile.context";
@@ -18,6 +18,8 @@ const ViewPosts = ({ posts, loading }) => {
   const [comment, setComment] = useState("");
   const [allComments, setAllComments] = useState({});
   const [currentPostId, setCurrentPostId] = useState(null);
+
+  const likeRef = useRef();
 
   console.log("posts in view posts", posts);
 
@@ -99,7 +101,8 @@ const ViewPosts = ({ posts, loading }) => {
                   <FaHeart
                     onClick={() => liking(postID)}
                     size={25}
-                    value={postID}
+                    name={postID}
+                    ref={likeRef}
                     className={likeAnimation ? "likedHeart" : ""}
                   />{" "}
                   <span style={{ fontSize: "20px" }}>
